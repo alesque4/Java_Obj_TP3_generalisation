@@ -1,4 +1,4 @@
-package fr.pizzeria.console;
+package fr.pizzeria.service;
 
 import java.util.Scanner;
 
@@ -6,13 +6,13 @@ import fr.pizzeria.model.Pizza;
 import fr.pizzeria.model.PizzaMemDao;
 
 public abstract class MenuService {
-	abstract void executeUC(Scanner input, PizzaMemDao dao);
+	public abstract void executeUC(Scanner input, PizzaMemDao dao);
 	
 	/**
 	 * Demande une nouvelle pizza à l'utilisateur
 	 * @return la pizza saisie par l'utilisateur
 	 */
-	public static Pizza demandePizza(Scanner input) {
+	protected Pizza demandePizza(Scanner input) {
 		String codeAjout, libelleAjout;
 		double prixAjout=0;
 		boolean inputOk = false;

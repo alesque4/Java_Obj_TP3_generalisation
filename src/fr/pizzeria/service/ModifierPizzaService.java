@@ -1,4 +1,4 @@
-package fr.pizzeria.console;
+package fr.pizzeria.service;
 
 import java.util.Scanner;
 
@@ -8,7 +8,7 @@ import fr.pizzeria.model.PizzaMemDao;
 public class ModifierPizzaService extends MenuService {
 
 	@Override
-	void executeUC(Scanner input, PizzaMemDao dao) {
+	public void executeUC(Scanner input, PizzaMemDao dao) {
 		Pizza pizzaInput;
 		String codeInput;
 		

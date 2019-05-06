@@ -7,6 +7,8 @@ package fr.pizzeria.console;
 
 import java.util.Scanner;
 import fr.pizzeria.model.*;
+import fr.pizzeria.service.MenuService;
+import fr.pizzeria.service.MenuServiceFactory;
 
 public class PizzeriaAdminConsoleApp {
 	
