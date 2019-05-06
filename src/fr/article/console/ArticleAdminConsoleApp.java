@@ -23,6 +23,7 @@ public class ArticleAdminConsoleApp {
 	public static void main(String[] args) throws Exception {
 		boolean quitte = false;
 		int choixUtilisateur = 0;
+		TypeMemDao typeDao = new TypeMemDao();
 		ArticleMemDao dao = new ArticleMemDao();
 		MenuServiceFactory factory = new MenuServiceFactory();
 		MenuService service;
@@ -36,7 +37,7 @@ public class ArticleAdminConsoleApp {
 			//Lancement du service correspondant
 			service = factory.serviceFactory(choixUtilisateur);
 			if(service != null) {
-				service.executeUC(input, dao);
+				service.executeUC(input, dao, typeDao);
 			}else {
 				System.out.println("Au revoir :(");
 				quitte = true;
@@ -49,10 +50,10 @@ public class ArticleAdminConsoleApp {
 	 */
 	public static void afficheMenu() {
 		System.out.println("***** Pizzeria Administration *****");
-		System.out.println("1. Lister les pizzas");
-		System.out.println("2. Ajouter une nouvelle pizza");
-		System.out.println("3. Mettre à jour une pizza");
-		System.out.println("4. Supprimer une pizza");
+		System.out.println("1. Lister les articles");
+		System.out.println("2. Ajouter un nouvel article");
+		System.out.println("3. Mettre à jour un article");
+		System.out.println("4. Supprimer un article");
 		System.out.println("99. Sortir");
 	}
 	

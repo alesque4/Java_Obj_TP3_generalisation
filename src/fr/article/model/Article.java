@@ -8,6 +8,17 @@ public class Article {
 	private String code;
 	private HashMap<String, String> infos;
 	
+	public Article() {
+		type = null;
+		code = null;
+		infos = new HashMap<String, String>();
+	}
+	
+	public Article(TypeArticle typeArticle, String code, HashMap<String, String> infos) {
+		this.type = typeArticle;
+		this.code = code;
+		this.infos = infos;
+	}
 	
 	public TypeArticle getType() {
 		return type;

@@ -5,10 +5,10 @@ import java.util.HashMap;
 public class TypeArticle {
 
 	private String nom;
-	private HashMap<String, String> attributs;
+	private HashMap<String, TypeAttribut> attributs;
 	
 	
-	public String getAttributeType(String attr){
+	public TypeAttribut getAttributeType(String attr){
 		return attributs.get(attr);
 	}
 	
@@ -18,10 +18,10 @@ public class TypeArticle {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	public HashMap<String, String> getAttributs() {
+	public HashMap<String, TypeAttribut> getAttributs() {
 		return attributs;
 	}
-	public void setAttributs(HashMap<String, String> attributs) {
+	public void setAttributs(HashMap<String, TypeAttribut> attributs) {
 		this.attributs = attributs;
 	}
 }
