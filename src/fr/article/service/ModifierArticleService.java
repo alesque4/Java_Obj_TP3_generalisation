@@ -1,15 +1,15 @@
-package fr.pizzeria.service;
+package fr.article.service;
 
 import java.util.Scanner;
 
-import fr.pizzeria.model.Pizza;
-import fr.pizzeria.model.PizzaMemDao;
+import fr.article.model.Article;
+import fr.article.model.ArticleMemDao;
 
-public class ModifierPizzaService extends MenuService {
+public class ModifierArticleService extends MenuService {
 
 	@Override
-	public void executeUC(Scanner input, PizzaMemDao dao) {
-		Pizza pizzaInput;
+	public void executeUC(Scanner input, ArticleMemDao dao) {
+		Article pizzaInput;
 		String codeInput;
 		
 		//Demande le code de la pizza
@@ -19,9 +19,9 @@ public class ModifierPizzaService extends MenuService {
 		
 		//Demande la nouvelle pizza
 		System.out.println("Entrez la nouvelle pizza");
-		pizzaInput = demandePizza(input);
+		pizzaInput = demandeArticle(input);
 		
 		//Maj
-		dao.updatePizza(codeInput, pizzaInput);
+		dao.updateArticle(codeInput, pizzaInput);
 	}
 }

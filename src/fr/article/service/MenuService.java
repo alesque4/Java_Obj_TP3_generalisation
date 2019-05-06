@@ -1,18 +1,18 @@
-package fr.pizzeria.service;
+package fr.article.service;
 
 import java.util.Scanner;
 
-import fr.pizzeria.model.Pizza;
-import fr.pizzeria.model.PizzaMemDao;
+import fr.article.model.Article;
+import fr.article.model.ArticleMemDao;
 
 public abstract class MenuService {
-	public abstract void executeUC(Scanner input, PizzaMemDao dao);
+	public abstract void executeUC(Scanner input, ArticleMemDao dao);
 	
 	/**
 	 * Demande une nouvelle pizza à l'utilisateur
 	 * @return la pizza saisie par l'utilisateur
 	 */
-	protected Pizza demandePizza(Scanner input) {
+	protected Article demandeArticle(Scanner input) {
 		String codeAjout, libelleAjout;
 		double prixAjout=0;
 		boolean inputOk = false;
@@ -30,6 +30,6 @@ public abstract class MenuService {
 				input.next();
 			}
 		}
-		return new Pizza(codeAjout, libelleAjout, prixAjout);
+		return new Article(codeAjout, libelleAjout, prixAjout);
 	}
 }

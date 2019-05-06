@@ -1,16 +1,17 @@
 /**
- * TP1 Java objet
+ * TP3 Java objet. Version plus générique
  * @author Alexandre Meur
  */
 
-package fr.pizzeria.console;
+package fr.article.console;
 
 import java.util.Scanner;
-import fr.pizzeria.model.*;
-import fr.pizzeria.service.MenuService;
-import fr.pizzeria.service.MenuServiceFactory;
 
-public class PizzeriaAdminConsoleApp {
+import fr.article.model.*;
+import fr.article.service.MenuService;
+import fr.article.service.MenuServiceFactory;
+
+public class ArticleAdminConsoleApp {
 	
 	public static Scanner input = new Scanner(System.in);
 
@@ -22,7 +23,7 @@ public class PizzeriaAdminConsoleApp {
 	public static void main(String[] args) throws Exception {
 		boolean quitte = false;
 		int choixUtilisateur = 0;
-		PizzaMemDao dao = new PizzaMemDao();
+		ArticleMemDao dao = new ArticleMemDao();
 		MenuServiceFactory factory = new MenuServiceFactory();
 		MenuService service;
 		
