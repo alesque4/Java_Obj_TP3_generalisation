@@ -5,25 +5,12 @@
 
 package fr.pizzeria.console;
 
-import java.util.Arrays;
 import java.util.Scanner;
-import fr.pizzeria.model.Pizza;
+import fr.pizzeria.model.*;
 
 public class PizzeriaAdminConsoleApp {
 	
 	public static Scanner input = new Scanner(System.in);
-	public static Pizza[] tabPizza = {
-			new Pizza("PEP","Pépéroni",12.50),
-			new Pizza("MAR","Margherita",14.00),
-			new Pizza("REIN","La Reine",11.50),
-			new Pizza("FRO","La 4 Fromages",12.00),
-			new Pizza("CAN","La cannibale",12.50),
-			new Pizza("SAV","La savoyarde",13.00),
-			new Pizza("ORI","L'orientale",13.50),
-			new Pizza("IND","L'indienne",14.00)
-		};
-	//Taille par laquelle on agrandit le tableau quand il est plein
-	public static final int TAB_AGRANDIR = 5; 
 
 	/**
 	 * Programme principal
@@ -33,6 +20,9 @@ public class PizzeriaAdminConsoleApp {
 	public static void main(String[] args) throws Exception {
 		boolean quitte = false;
 		int choixUtilisateur = 0;
+		PizzaMemDao dao = new PizzaMemDao();
+		Pizza pizzaInput = null;
+		String codeInput = "";
 		
 		while(!quitte) {
 			//Affichage du menu
@@ -45,19 +35,44 @@ public class PizzeriaAdminConsoleApp {
 			switch(choixUtilisateur){
 				//Liste des pizzas
 				case 1:
-					affichePizzas();
+					affichePizzas(dao);
 					break;
+					
 				//Ajout d'une pizza
 				case 2:
-					ajoutePizza();
+					//Demandes des infos à l'utilisateur
+					System.out.println("Ajout d'une nouvelle pizza");
+					pizzaInput = demandePizza();
+					dao.saveNewPizza(pizzaInput);
 					break;
+					
 				//Modification d'une pizza
 				case 3:
-					majPizza();
+					//Demande le code de la pizza
+					System.out.println("Mise à jour d'une pizza");
+					System.out.println("Entrez le code de la pizza à modifier : ");
+					codeInput = input.next();
+					
+					//Demande la nouvelle pizza
+					System.out.println("Entrez la nouvelle pizza");
+					pizzaInput = demandePizza();
+					
+					//Maj
+					dao.updatePizza(codeInput, pizzaInput);
 					break;
+					
 				//Suppression d'une pizza
 				case 4:
-					supprimePizza();
+					//affichage des pizzas
+					affichePizzas(dao);
+					
+					//Demande le code de la pizza
+					System.out.println("Entrez le code de la pizza à supprimer : ");
+					codeInput = input.next();
+					
+					//Supression
+					dao.deletePizza(codeInput);
+
 					break;
 				//Fin du programme
 				case 99:
@@ -110,13 +125,9 @@ public class PizzeriaAdminConsoleApp {
 	/**
 	 * Affiche les pizzas
 	 */
-	public static void affichePizzas() {
+	public static void affichePizzas(PizzaMemDao dao) {		
 		System.out.println("Liste des pizzas");
-		for(int i=0; i<tabPizza.length; i++) {
-			if(tabPizza[i] != null) {
-				System.out.println(tabPizza[i].toString());
-			}
-		}
+		System.out.println(dao.toString());
 	}
 	
 	/**
@@ -142,101 +153,6 @@ public class PizzeriaAdminConsoleApp {
 			}
 		}
 		return new Pizza(codeAjout, libelleAjout, prixAjout);
-	}
-	
-	/**
-	 * Ajoute une pizza dans le tableau et gère la taille du tableau si besoin
-	 */
-	public static void ajoutePizza() {
-		Pizza pizzaAjout;
-		int recherche=0;
-		
-		//Demandes des infos à l'utilisateur
-		System.out.println("Ajout d'une nouvelle pizza");
-		pizzaAjout = demandePizza();
-		
-		//On vérifie si le code pizza existe déjà
-		recherche = recherchePizza(pizzaAjout.getCode());
-		if(recherche >= 0) {
-			System.out.println("Ce code est déjà utilisé. La pizza n'a pas été ajouté.");
-			return;
-		}
-		
-		//Si le tableau est plein on l'agrandit
-		if(tabPizza[tabPizza.length-1] != null) {
-			tabPizza = Arrays.copyOf(tabPizza, tabPizza.length + TAB_AGRANDIR);
-		}
-		
-		//Ajout de la pizza au premier emplacement libre
-		for(int i=0; i<tabPizza.length; i++) {
-			if(tabPizza[i] == null) {
-				tabPizza[i] = pizzaAjout;
-				break;
-			}
-		}	
-	}
-	
-	/**
-	 * Recherche une pizza correspondante au code fourni et retourne son id dans le
-	 * tableau (pas l'id de l'instance de la classe pizza)
-	 * @param code Le code permettant de rechercher la pizza
-	 * @return l'id de la pizza dans le tableau. -1 si la pizza n'est pas trouvée.
-	 */
-	public static int recherchePizza(String code) {
-		for(int i=0; i<tabPizza.length; i++) {
-			if(tabPizza[i] != null && tabPizza[i].getCode().equals(code)) {
-				return i;
-			}
-		}
-		return -1;
-	}
-	
-	/**
-	 * Met à jour une pizza du tableau
-	 */
-	public static void majPizza() {
-		String codeRecherche;
-		int idTabPizza = -1; //-1 = pizza non trouvée
-		Pizza nouvellePizza;
-		
-		//Demande le code de la pizza
-		System.out.println("Mise à jour d'une pizza");
-		System.out.println("Entrez le code de la pizza à modifier : ");
-		codeRecherche = input.next();
-		
-		//Recherche de la pizza
-		idTabPizza = recherchePizza(codeRecherche);
-		
-		if(idTabPizza >= 0) {
-			//demande de la nouvelle pizza
-			nouvellePizza = demandePizza();
-			
-			//ajout
-			tabPizza[idTabPizza] = nouvellePizza;
-		}else {
-			System.out.println("Pizza non trouvée");
-		}
-	}
-	
-	public static void supprimePizza() {
-		String codeRecherche;
-		int idTabPizza = 0;
-		
-		//affichage du menu
-		affichePizzas();
-		System.out.println("Suppression d'une pizza");
-		
-		//Demande le code de la pizza
-		System.out.println("Entrez le code de la pizza à supprimer : ");
-		codeRecherche = input.next();
-		idTabPizza = recherchePizza(codeRecherche);
-		
-		//Suppression si on a trouvé une pizza
-		if(idTabPizza >= 0) {
-			tabPizza[idTabPizza] = null;
-		}else {
-			System.out.println("Pizza non trouvée");
-		}
 	}
 }
 

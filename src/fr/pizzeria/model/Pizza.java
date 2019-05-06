@@ -71,4 +71,18 @@ public class Pizza {
 	public double getPrix() {
 		return prix;
 	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public void setLibelle(String libelle) {
+		this.libelle = libelle;
+	}
+
+	public void setPrix(double prix) {
+		this.prix = prix;
+	}
+	
+	
 }
